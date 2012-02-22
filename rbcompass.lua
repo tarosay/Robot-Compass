@@ -70,10 +70,8 @@ local txt, ret,psec
 		sock.nsend( 1, cmd, 2 ) 
 		if( cmd:sub(1,1)=="Q" )then break end
 		txt, ret = sock.nrecv( 1 )
-		--print( txt..","..ret )
 		if( txt==cmd:sub(1,1) )then break end
 		print( "コマンド送信に失敗しました" )
-		--dialog( "","コマンド送信に失敗しました",1 )
 	end
     psec=system.getSec() + sec -0.4
     while psec>system.getSec() do	end
