@@ -1,5 +1,5 @@
 ------------------------------------------
--- Robot Compass Ver.1.0
+-- Robot Compass
 ------------------------------------------
 --関数宣言--------------------------------
 main={}                --mainメソッド
@@ -70,8 +70,10 @@ local txt, ret,psec
 		sock.nsend( 1, cmd, 2 ) 
 		if( cmd:sub(1,1)=="Q" )then break end
 		txt, ret = sock.nrecv( 1 )
+		--print( txt..","..ret )
 		if( txt==cmd:sub(1,1) )then break end
 		print( "コマンド送信に失敗しました" )
+		--dialog( "","コマンド送信に失敗しました",1 )
 	end
     psec=system.getSec() + sec -0.4
     while psec>system.getSec() do	end
@@ -127,6 +129,10 @@ function main()
 	iniRngBuf()
 	
 	local cmd
+	--ギアを回転に入れる間を取る
+	cmd = "L"..string.char(25)
+	sendcmd( cmd, 0.2 )
+
 	local gosa = 5
 	local spd = 64
 	local tim = 0.5
@@ -138,13 +144,13 @@ function main()
 		end
 		
 		if( kaku>90 and kaku<270 )then
-			spd = 72
+			spd = 75
 			tim = 1.0
 		elseif( (kaku>45 and kaku<=90) or (kaku>=270 and kaku<315) )then
-			spd = 56
+			spd = 60
 			tim = 0.4
 		else
-			spd = 40
+			spd = 38
 			tim = 0.2
 		end
 		
@@ -185,8 +191,8 @@ function main()
 				canvas.putflush()
 			end
 		else
-			canvas.drawCls( color(255,255,255) )
-			--print( kaku )
+			--canvas.drawCls( color(255,255,255) )
+			print( kaku )
 		end
 
 		local x,y,s = touch()
